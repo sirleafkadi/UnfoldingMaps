@@ -8,6 +8,12 @@ import de.fhpotsdam.unfolding.providers.Google;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 
+import de.fhpotsdam.unfolding.providers.AbstractMapProvider;
+import de.fhpotsdam.unfolding.providers.AbstractMapTileUrlProvider;
+ import de.fhpotsdam.unfolding.providers.EsriProvider.GenericEsriProvider;
+
+
+
 /** HelloWorld
   * An application with two maps side-by-side zoomed in on different locations.
   * Author: UC San Diego Coursera Intermediate Programming team
@@ -26,9 +32,6 @@ public class HelloWorld extends PApplet
 	/** This is where to find the local tiles, for working without an Internet connection */
 	public static String mbTilesString = "blankLight-1-3.mbtiles";
 	
-	// IF YOU ARE WORKING OFFLINE: Change the value of this variable to true
-	private static final boolean offline = false;
-	
 	/** The map we use to display our home town: La Jolla, CA */
 	UnfoldingMap map1;
 	
@@ -45,8 +48,8 @@ public class HelloWorld extends PApplet
 		// Play around with these numbers and see what happens!
 		this.background(200, 200, 200);
 		
-		// Select a map provider
-		UnfoldingMap provider = new UnfoldingMap(this, new Microsoft.AerialProvider());
+		new UnfoldingMap(this, new EsriProvider.WorldPhysical()
+				  );
 		// Set a zoom level
 		int zoomLevel = 10;
 		
