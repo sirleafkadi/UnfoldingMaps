@@ -93,15 +93,11 @@ public class EarthquakeCityMap extends PApplet {
 //	    // List markers (so that it will be added to the map in the line below)
 //	    
 //	    
-//	    // Add the markers to the map so that they are displayed
-//	    //map.addMarker(val);
+//	
+//	   
 //	    
 	    
-	    
-	    
-	    
-	    
-	    
+	    ////Creating  Array List
 	    List<Marker> markers = new ArrayList<Marker>(); 
 	    //set colors
 	    int yellow = color(255, 255, 0);
@@ -110,25 +106,30 @@ public class EarthquakeCityMap extends PApplet {
 
 	    //Use provided parser to collect properties for each earthquake
 	    //PointFeatures have a getLocation method
+	    ///Also, getting information from the server and storing it into an array 
 	    List<PointFeature> earthquakes = ParseFeed.parseEarthquake(this, earthquakesURL);
 	    
 	    // These print statements show you (1) all of the relevant properties 
 	    // in the features, and (2) how to get one property and use it
+	    ///Filtering the data from earthQuakes Array base on Mag size
 	    if (earthquakes.size() > 0) {
 	    	PointFeature f = earthquakes.get(0);
 	    	System.out.println(f.getProperties());
 	    	Object magObj = f.getProperty("magnitude");
 	    	float mag = Float.parseFloat(magObj.toString());
-	    	// PointFeatures also have a getLocation method
+	    
 	    }
 	    
+	    //Looping through the Parse Earthquakes to get properties
+	    
 	    for(PointFeature eq: earthquakes){
-	    	// creates the Simple Marker Object
+	    	// Creating the Simple Marker Object and calling the Create method 
 	    	SimplePointMarker eqmarker = createMarker(eq);
-	    	// get magnitude from Point Feature eq and convert it to float
+	    	// getting magnitude from Point Feature eq and converting to float
 	    	Object magObj = eq.getProperty("magnitude");
-	    	float mag = Float.parseFloat(magObj.toString());		
-	    	// set color of markers based on magnitude and set size of radius
+	    	float mag = Float.parseFloat(magObj.toString());
+	    	
+	    	//Creating and filtering colors based on magnitude and set size of radius
 	    	if (mag >= 5.0f){
 	    		eqmarker.setColor(red);
 	    		eqmarker.setRadius(10);
@@ -143,42 +144,20 @@ public class EarthquakeCityMap extends PApplet {
 	    	}
 	    	
 	    	
-	    	//adds marker to markers list
+	    	//adding marker to markers list
 	    	markers.add(eqmarker);
 	    	
 	    }
-	    // adds markers to the map
+	    // adding markers to the map
 	    map.addMarkers(markers);	  
 	    
 	    
+	 }	    
 	    
 	    
+	   //////////////End OF Set Up Method//////////////////////// 
 	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	}
-		
-	/* createMarker: A suggested helper method that takes in an earthquake 
+	  /* createMarker: A suggested helper method that takes in an earthquake 
 	 * feature and returns a SimplePointMarker for that earthquake
 	 * 
 	 * In step 3 You can use this method as-is.  Call it from a loop in the 
@@ -202,7 +181,7 @@ public class EarthquakeCityMap extends PApplet {
 		
 		// Here is an example of how to use Processing's color method to generate 
 	    // an int that represents the color yellow.  
-	    int yellow = color(255, 255, 0);
+	   // int yellow = color(255, 255, 0);
 		
 		// TODO (Step 4): Add code below to style the marker's size and color 
 	    // according to the magnitude of the earthquake.  
@@ -229,6 +208,72 @@ public class EarthquakeCityMap extends PApplet {
 	private void addKey() 
 	{	
 		// Remember you can use Processing's graphics methods here
-	
+		
+		
+		
+		
+		
+		
+		
+				// Making the Box
+				fill(255, 255, 255);
+				rect(30, 100, 150, 300, 7);
+				
+				
+				// Making the text 
+				textSize(12);
+				fill(50);
+				text("Earthquake Key", 60, 110, 150, 150);
+				text("5.0+ Magnitude", 80, 150, 150, 150);
+				text("4.0+ Magnitude", 80, 190, 150, 150);
+				text("Below 4.0", 80, 230, 150, 150);
+				
+				
+				//Creating each Mag and changing its color and position
+				//5+ Mag
+				fill(221, 30, 8);
+				ellipse(60, 157, 10, 10);
+				//4+ mag
+				fill(255, 255, 0);
+				ellipse(60, 198, 6, 6);
+				//small Mag
+				fill(8, 31, 145);
+				ellipse(60, 237, 3, 3);
+		
 	}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+		
+		
+		
+		
+		
+		
+		
+	
+		
+	
+	
 }
