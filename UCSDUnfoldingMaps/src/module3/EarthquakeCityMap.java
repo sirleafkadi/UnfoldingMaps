@@ -13,13 +13,24 @@ import processing.core.PApplet;
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.marker.Marker;
 import de.fhpotsdam.unfolding.data.PointFeature;
+import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.marker.SimplePointMarker;
 import de.fhpotsdam.unfolding.providers.Google;
+import de.fhpotsdam.unfolding.providers.ImmoScout;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
+import de.fhpotsdam.unfolding.providers.MapQuestProvider;
+import de.fhpotsdam.unfolding.providers.Microsoft;
 import de.fhpotsdam.unfolding.utils.MapUtils;
+
+
+import java.util.List;
+import de.fhpotsdam.unfolding.data.Feature;
 
 //Parsing library
 import parsing.ParseFeed;
+
+
+
 
 /** EarthquakeCityMap
  * An application with an interactive map displaying earthquake data.
@@ -33,7 +44,7 @@ public class EarthquakeCityMap extends PApplet {
 	private static final long serialVersionUID = 1L;
 
 	// IF YOU ARE WORKING OFFLINE, change the value of this variable to true
-	private static final boolean offline = false;
+	private static final boolean offline = true;
 	
 	// Less than this threshold is a light earthquake
 	public static final float THRESHOLD_MODERATE = 5;
@@ -58,7 +69,7 @@ public class EarthquakeCityMap extends PApplet {
 		    earthquakesURL = "2.5_week.atom"; 	// Same feed, saved Aug 7, 2015, for working offline
 		}
 		else {
-			map = new UnfoldingMap(this, 200, 50, 700, 500, new Google.GoogleMapProvider());
+			map = new UnfoldingMap(this, 200, 50, 700, 500, new  Google.GoogleTerrainProvider() );
 			// IF YOU WANT TO TEST WITH A LOCAL FILE, uncomment the next line
 			//earthquakesURL = "2.5_week.atom";
 		}
@@ -66,21 +77,105 @@ public class EarthquakeCityMap extends PApplet {
 	    map.zoomToLevel(2);
 	    MapUtils.createDefaultEventDispatcher(this, map);	
 			
-	    // The List you will populate with new SimplePointMarkers
-	    List<Marker> markers = new ArrayList<Marker>();
+   
+	  
+	    
+//	    // The List you will populate with new SimplePointMarkers
+//	    List<Marker> markers = new ArrayList<Marker>();
+//
+//	    //Use provided parser to collect properties for each earthquake
+//	    //PointFeatures have a getLocation method
+//	    List<PointFeature> earthquakes = ParseFeed.parseEarthquake(this, earthquakesURL);
+//	    
+//	    //TODO (Step 3): Add a loop here that calls createMarker (see below) 
+//	    // to create a new SimplePointMarker for each PointFeature in 
+//	    // earthquakes.  Then add each new SimplePointMarker to the 
+//	    // List markers (so that it will be added to the map in the line below)
+//	    
+//	    
+//	    // Add the markers to the map so that they are displayed
+//	    //map.addMarker(val);
+//	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    List<Marker> markers = new ArrayList<Marker>(); 
+	    //set colors
+	    int yellow = color(255, 255, 0);
+	    int blue = color(8, 31, 145);
+	    int red = color(221, 30, 8);
 
 	    //Use provided parser to collect properties for each earthquake
 	    //PointFeatures have a getLocation method
 	    List<PointFeature> earthquakes = ParseFeed.parseEarthquake(this, earthquakesURL);
 	    
-	    //TODO (Step 3): Add a loop here that calls createMarker (see below) 
-	    // to create a new SimplePointMarker for each PointFeature in 
-	    // earthquakes.  Then add each new SimplePointMarker to the 
-	    // List markers (so that it will be added to the map in the line below)
+	    // These print statements show you (1) all of the relevant properties 
+	    // in the features, and (2) how to get one property and use it
+	    if (earthquakes.size() > 0) {
+	    	PointFeature f = earthquakes.get(0);
+	    	System.out.println(f.getProperties());
+	    	Object magObj = f.getProperty("magnitude");
+	    	float mag = Float.parseFloat(magObj.toString());
+	    	// PointFeatures also have a getLocation method
+	    }
+	    
+	    for(PointFeature eq: earthquakes){
+	    	// creates the Simple Marker Object
+	    	SimplePointMarker eqmarker = createMarker(eq);
+	    	// get magnitude from Point Feature eq and convert it to float
+	    	Object magObj = eq.getProperty("magnitude");
+	    	float mag = Float.parseFloat(magObj.toString());		
+	    	// set color of markers based on magnitude and set size of radius
+	    	if (mag >= 5.0f){
+	    		eqmarker.setColor(red);
+	    		eqmarker.setRadius(10);
+	    	}
+	    	else if (mag >= 4.0f && mag < 5.0f ){
+	    		eqmarker.setColor(yellow);
+	    		eqmarker.setRadius(6);
+	    	}
+	    	else{
+	    		eqmarker.setColor(blue);
+	    		eqmarker.setRadius(3);
+	    	}
+	    	
+	    	
+	    	//adds marker to markers list
+	    	markers.add(eqmarker);
+	    	
+	    }
+	    // adds markers to the map
+	    map.addMarkers(markers);	  
 	    
 	    
-	    // Add the markers to the map so that they are displayed
-	    map.addMarkers(markers);
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	}
 		
 	/* createMarker: A suggested helper method that takes in an earthquake 
@@ -97,7 +192,7 @@ public class EarthquakeCityMap extends PApplet {
 		// To print all of the features in a PointFeature (so you can see what they are)
 		// uncomment the line below.  Note this will only print if you call createMarker 
 		// from setup
-		//System.out.println(feature.getProperties());
+		System.out.println(feature.getProperties());
 		
 		// Create a new SimplePointMarker at the location given by the PointFeature
 		SimplePointMarker marker = new SimplePointMarker(feature.getLocation());
