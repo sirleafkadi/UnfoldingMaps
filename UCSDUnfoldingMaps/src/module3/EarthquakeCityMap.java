@@ -77,77 +77,45 @@ public class EarthquakeCityMap extends PApplet {
 	    map.zoomToLevel(2);
 	    MapUtils.createDefaultEventDispatcher(this, map);	
 			
-   
-	  
-	    
-//	    // The List you will populate with new SimplePointMarkers
-//	    List<Marker> markers = new ArrayList<Marker>();
-//
-//	    //Use provided parser to collect properties for each earthquake
-//	    //PointFeatures have a getLocation method
-//	    List<PointFeature> earthquakes = ParseFeed.parseEarthquake(this, earthquakesURL);
-//	    
-//	    //TODO (Step 3): Add a loop here that calls createMarker (see below) 
-//	    // to create a new SimplePointMarker for each PointFeature in 
-//	    // earthquakes.  Then add each new SimplePointMarker to the 
-//	    // List markers (so that it will be added to the map in the line below)
-//	    
-//	    
-//	
-//	   
-//	    
-	    
-	    ////Creating  Array List
-	    List<Marker> markers = new ArrayList<Marker>(); 
-	    //set colors
+//	    //setting colors
 	    int yellow = color(255, 255, 0);
 	    int blue = color(8, 31, 145);
 	    int red = color(221, 30, 8);
+   
+ // The List you will populate with new SimplePointMarkers
+    List<Marker> markers = new ArrayList<Marker>();
+    
+// Use provided parser to collect properties for each earthquake
+    //PointFeatures have a getLocation method
+List<PointFeature> earthquakes = ParseFeed.parseEarthquake(this, earthquakesURL);
 
-	    //Use provided parser to collect properties for each earthquake
-	    //PointFeatures have a getLocation method
-	    ///Also, getting information from the server and storing it into an array 
-	    List<PointFeature> earthquakes = ParseFeed.parseEarthquake(this, earthquakesURL);
+PointFeature eqobj = earthquakes.get(0);
+System.out.println(eqobj.getProperties());
+
+ //Looping through the Parse Earthquakes to get properties
 	    
-	    // These print statements show you (1) all of the relevant properties 
-	    // in the features, and (2) how to get one property and use it
-	    ///Filtering the data from earthQuakes Array base on Mag size
-	    if (earthquakes.size() > 0) {
-	    	PointFeature f = earthquakes.get(0);
-	    	System.out.println(f.getProperties());
-	    	Object magObj = f.getProperty("magnitude");
-	    	float mag = Float.parseFloat(magObj.toString());
-	    
-	    }
-	    
-	    //Looping through the Parse Earthquakes to get properties
-	    
-	    for(PointFeature eq: earthquakes){
-	    	// Creating the Simple Marker Object and calling the Create method 
-	    	SimplePointMarker eqmarker = createMarker(eq);
-	    	// getting magnitude from Point Feature eq and converting to float
-	    	Object magObj = eq.getProperty("magnitude");
-	    	float mag = Float.parseFloat(magObj.toString());
-	    	
-	    	//Creating and filtering colors based on magnitude and set size of radius
-	    	if (mag >= 5.0f){
-	    		eqmarker.setColor(red);
-	    		eqmarker.setRadius(10);
-	    	}
-	    	else if (mag >= 4.0f && mag < 5.0f ){
-	    		eqmarker.setColor(yellow);
-	    		eqmarker.setRadius(6);
-	    	}
-	    	else{
-	    		eqmarker.setColor(blue);
-	    		eqmarker.setRadius(3);
-	    	}
-	    	
-	    	
-	    	//adding marker to markers list
-	    	markers.add(eqmarker);
-	    	
-	    }
+  for(PointFeature eqguy: earthquakes) {
+	  SimplePointMarker marks = createMarker(eqguy);
+	  Object magobj = eqguy.getProperty("magnitude");
+	  float eqmag = Float.parseFloat(magobj.toString());
+	  
+	  
+	 /////Filtering and changing Mag Colors
+	  
+	  if(eqmag>=5) {
+		  marks.setColor(red);
+		  }
+	  else if(eqmag>=4 && eqmag<5) {
+		  marks.setColor(yellow);
+		  }
+	  else {
+		  marks.setColor(blue);
+	  }
+	  
+	  
+	  markers.add(marks);
+	  
+	 }
 	    // adding markers to the map
 	    map.addMarkers(markers);	  
 	    
@@ -171,7 +139,7 @@ public class EarthquakeCityMap extends PApplet {
 		// To print all of the features in a PointFeature (so you can see what they are)
 		// uncomment the line below.  Note this will only print if you call createMarker 
 		// from setup
-		System.out.println(feature.getProperties());
+		System.out.println(feature.getProperty("depth"));
 		
 		// Create a new SimplePointMarker at the location given by the PointFeature
 		SimplePointMarker marker = new SimplePointMarker(feature.getLocation());
@@ -198,7 +166,7 @@ public class EarthquakeCityMap extends PApplet {
 	
 	public void draw() {
 	    background(10);
-	    map.draw();
+   map.draw();
 	    addKey();
 	}
 
