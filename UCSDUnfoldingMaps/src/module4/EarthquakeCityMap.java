@@ -35,7 +35,7 @@ public class EarthquakeCityMap extends PApplet {
 	private static final long serialVersionUID = 1L;
 
 	// IF YOU ARE WORKING OFFILINE, change the value of this variable to true
-	private static final boolean offline = false;
+	private static final boolean offline = true;
 	
 	/** This is where to find the local tiles, for working without an Internet connection */
 	public static String mbTilesString = "blankLight-1-3.mbtiles";
@@ -56,7 +56,7 @@ public class EarthquakeCityMap extends PApplet {
 	private List<Marker> cityMarkers;
 	// Markers for each earthquake
 	private List<Marker> quakeMarkers;
-
+		private int numofoceanquake;
 	// A List of country markers
 	private List<Marker> countryMarkers;
 	
@@ -70,7 +70,7 @@ public class EarthquakeCityMap extends PApplet {
 		else {
 			map = new UnfoldingMap(this, 200, 50, 650, 600, new Google.GoogleMapProvider());
 			// IF YOU WANT TO TEST WITH A LOCAL FILE, uncomment the next line
-		    //earthquakesURL = "2.5_week.atom";
+//		    earthquakesURL = "2.5_week.atom";
 		}
 		MapUtils.createDefaultEventDispatcher(this, map);
 		
@@ -102,12 +102,18 @@ public class EarthquakeCityMap extends PApplet {
 	    for(PointFeature feature : earthquakes) {
 		  //check if LandQuake
 		  if(isLand(feature)) {
-		    quakeMarkers.add(new LandQuakeMarker(feature));
-		  }
+		  quakeMarkers.add(new LandQuakeMarker(feature) );
+			   }
+		  
 		  // OceanQuakes
 		  else {
-		    quakeMarkers.add(new OceanQuakeMarker(feature));
+		   quakeMarkers.add(new OceanQuakeMarker(feature));
+		  numofoceanquake +=1;
 		  }
+		  
+		  
+		  
+		  
 	    }
 
 	    // could be used for debugging
@@ -116,6 +122,9 @@ public class EarthquakeCityMap extends PApplet {
 	    // (3) Add markers to map
 	    //     NOTE: Country markers are not added to the map.  They are used
 	    //           for their geometric properties
+	    
+	  
+	    
 	    map.addMarkers(quakeMarkers);
 	    map.addMarkers(cityMarkers);
 	    
@@ -141,17 +150,47 @@ public class EarthquakeCityMap extends PApplet {
 		textSize(12);
 		text("Earthquake Key", 50, 75);
 		
-		fill(color(255, 0, 0));
-		ellipse(50, 125, 15, 15);
-		fill(color(255, 255, 0));
-		ellipse(50, 175, 10, 10);
-		fill(color(0, 0, 255));
-		ellipse(50, 225, 5, 5);
 		
-		fill(0, 0, 0);
-		text("5.0+ Magnitude", 75, 125);
-		text("4.0+ Magnitude", 75, 175);
-		text("Below 4.0", 75, 225);
+		
+		
+//City Mark
+fill(color(0, 0, 0));
+triangle(50, 145, 45, 155, 55, 155);
+		
+		//Land Mark
+				fill(color(255, 255, 255));
+				ellipse(50, 100, 10, 10);
+				//OceanQuake
+				fill(color(255, 255, 255));
+				rect(45, 125, 10, 10);
+
+		
+		
+		
+		//Shallow
+				fill(color(255, 255, 0));
+				ellipse(50, 200, 10, 10);
+				//Intermediate
+				fill(color(0, 0 , 255));
+				ellipse(50, 225, 10, 10);
+				//Deep
+				fill(color(255, 0, 0));
+				ellipse(50, 250, 10, 10);
+		
+				///Printing Text Base off of drawing methods position
+				fill(0, 0, 0);
+				text("City Marker", 75, 100);
+				text("Land Quake", 75, 125);
+				text("Ocean Quake", 75, 150);
+				text("Size ~ Magnitude", 50, 175);
+				text("Shallow", 75, 200);
+				text("Intermediate", 75, 225);
+				text("Deep", 75, 250);
+		
+		
+		
+		
+
 	}
 
 	
@@ -170,8 +209,11 @@ public class EarthquakeCityMap extends PApplet {
 		// If isInCountry ever returns true, isLand should return true.
 		for (Marker m : countryMarkers) {
 			// TODO: Finish this method using the helper method isInCountry
-			
-		}
+		
+			if(isInCountry(earthquake, m)) {
+				
+				return true;}
+				}
 		
 		
 		// not inside any country
@@ -210,6 +252,34 @@ public class EarthquakeCityMap extends PApplet {
 		//  * If you know your Marker, m, is a LandQuakeMarker, then it has a "country" 
 		//      property set.  You can get the country with:
 		//        String country = (String)m.getProperty("country");
+		
+						
+		for(Marker countries: countryMarkers) {
+			
+			Object countriesobj = countries.getProperty("name");
+			int count=0;
+			
+			for(Marker quakes: quakeMarkers) {
+				Object countryquakes = quakes.getProperty("country");
+				
+				if(countriesobj== countryquakes) {
+					count+=1;
+				}
+				
+				
+			}
+			
+			if(count>=1) {
+			System.out.println(countriesobj+": "+count);
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
 		
 		
 	}
