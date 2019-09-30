@@ -34,6 +34,17 @@ public class LandQuakeMarker extends EarthquakeMarker {
 		
 		// TODO: Implement this method
 		
+				Object getrad = getProperty("radius");
+				float rad = Float.parseFloat(getrad.toString());
+				
+				pg.ellipse(x,y,rad,rad);
+				
+				
+	
+	
+	
+		
+		
 	}
 	
 
