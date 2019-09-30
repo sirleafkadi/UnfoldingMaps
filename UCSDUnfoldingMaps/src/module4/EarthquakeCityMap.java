@@ -179,9 +179,9 @@ triangle(50, 145, 45, 155, 55, 155);
 		
 				///Printing Text Base off of drawing methods position
 				fill(0, 0, 0);
-				text("City Marker", 75, 100);
-				text("Land Quake", 75, 125);
-				text("Ocean Quake", 75, 150);
+				text("Land Quake", 75, 100);
+				text("Ocean Quake", 75, 125);
+				text("City Marker", 75, 150);
 				text("Size ~ Magnitude", 50, 175);
 				text("Shallow", 75, 200);
 				text("Intermediate", 75, 225);
