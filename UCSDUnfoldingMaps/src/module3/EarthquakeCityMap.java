@@ -102,15 +102,21 @@ System.out.println(eqobj.getProperties());
 	  
 	 /////Filtering and changing Mag Colors
 	  
-	  if(eqmag>=5) {
+	  if(eqmag>=5.0f) {
 		  marks.setColor(red);
+		  marks.setRadius(10);
 		  }
-	  else if(eqmag>=4 && eqmag<5) {
+	  else if(eqmag>=4.0f && eqmag<5.0f) {
 		  marks.setColor(yellow);
-		  }
-	  else {
-		  marks.setColor(blue);
+		  marks.setRadius(10);}
+	  
+	  else if (eqmag>=3.0f && eqmag<=4.0f) {
+		  marks.setColor(color(128,128,128));
+		  marks.setRadius(10);
 	  }
+	  
+	  
+	
 	  
 	  
 	  markers.add(marks);
@@ -194,19 +200,19 @@ System.out.println(eqobj.getProperties());
 				text("Earthquake Key", 60, 110, 150, 150);
 				text("5.0+ Magnitude", 80, 150, 150, 150);
 				text("4.0+ Magnitude", 80, 190, 150, 150);
-				text("Below 4.0", 80, 230, 150, 150);
+				text("3 to 4", 80, 230, 150, 150);
 				
 				
 				//Creating each Mag and changing its color and position
 				//5+ Mag
 				fill(221, 30, 8);
-				ellipse(60, 157, 10, 10);
+				ellipse(60, 157, 20, 20);
 				//4+ mag
 				fill(255, 255, 0);
-				ellipse(60, 198, 6, 6);
+				ellipse(60, 198, 20, 20);
 				//small Mag
-				fill(8, 31, 145);
-				ellipse(60, 237, 3, 3);
+				fill(128, 128, 128);
+				ellipse(60, 237, 20, 20);
 		
 	}
 		
