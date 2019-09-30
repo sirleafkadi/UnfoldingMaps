@@ -11,7 +11,9 @@ import processing.core.PGraphics;
  * @author UC San Diego Intermediate Software Development MOOC team
  * @author Your name here
  *
- */
+ *
+ *
+
 public class CityMarker extends SimplePointMarker {
 	
 	// The size of the triangle marker
