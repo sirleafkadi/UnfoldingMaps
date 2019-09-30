@@ -115,11 +115,17 @@ System.out.println(eqobj.getProperties());
 		  marks.setRadius(10);
 	  }
 	  
-	  
+	 
 	
 	  
+	  if(eqmag>=3) {
+	
+		  markers.add(marks);
+	  }
 	  
-	  markers.add(marks);
+	  
+	 
+	  
 	  
 	 }
 	    // adding markers to the map
