@@ -78,9 +78,7 @@ public class EarthquakeCityMap extends PApplet {
 	    MapUtils.createDefaultEventDispatcher(this, map);	
 			
 //	    //setting colors
-	    int yellow = color(255, 255, 0);
-	    int blue = color(8, 31, 145);
-	    int red = color(221, 30, 8);
+	    
    
  // The List you will populate with new SimplePointMarkers
     List<Marker> markers = new ArrayList<Marker>();
@@ -95,39 +93,26 @@ System.out.println(eqobj.getProperties());
  //Looping through the Parse Earthquakes to get properties
 	    
   for(PointFeature eqguy: earthquakes) {
+	  
+	  
+	  
 	  SimplePointMarker marks = createMarker(eqguy);
-	  Object magobj = eqguy.getProperty("magnitude");
-	  float eqmag = Float.parseFloat(magobj.toString());
-	  
-	  
-	 /////Filtering and changing Mag Colors
-	  
-	  if(eqmag>=5.0f) {
-		  marks.setColor(red);
-		  marks.setRadius(10);
-		  }
-	  else if(eqmag>=4.0f && eqmag<5.0f) {
-		  marks.setColor(yellow);
-		  marks.setRadius(10);}
-	  
-	  else if (eqmag>=3.0f && eqmag<=4.0f) {
-		  marks.setColor(color(128,128,128));
-		  marks.setRadius(10);
-	  }
-	  
-	 
 	
 	  
-	  if(eqmag>=3) {
-	
-		  markers.add(marks);
-	  }
 	  
-	  
-	 
-	  
-	  
+	 if (marks!=null) {
+	 markers.add(marks);
 	 }
+	 
+	  
+	 
+	 
+	 
+	 }
+  
+  
+  
+  
 	    // adding markers to the map
 	    map.addMarkers(markers);	  
 	    
@@ -148,16 +133,49 @@ System.out.println(eqobj.getProperties());
 	*/
 	private SimplePointMarker createMarker(PointFeature feature)
 	{  
-		// To print all of the features in a PointFeature (so you can see what they are)
-		// uncomment the line below.  Note this will only print if you call createMarker 
-		// from setup
+		SimplePointMarker marks;
+		int yellow = color(255, 255, 0);
+	    int blue = color(8, 31, 145);
+	    int red = color(221, 30, 8);
+		
+		
 		System.out.println(feature.getProperty("depth"));
 		
-		// Create a new SimplePointMarker at the location given by the PointFeature
-		SimplePointMarker marker = new SimplePointMarker(feature.getLocation());
+		  Object magobj = feature.getProperty("magnitude");
+		  float eqmag = Float.parseFloat(magobj.toString());
+		  
+		  if(eqmag>=3.0) {
+		 /////Filtering and changing Mag Colors
+		  
+			  marks = new SimplePointMarker(feature.getLocation());
+			  
+			  
+			  
+		  if(eqmag>=5.0) {
+			  marks.setColor(red);
+			  marks.setRadius(10);
+			  }
+		  
+		  else if(eqmag>=4.0 && eqmag<5.0f) {
+			  marks.setColor(yellow);
+			  marks.setRadius(10);}
+		  
+		  else if (eqmag>=3.0 && eqmag<=4.0f) {
+			  marks.setColor(color(128,128,128));
+			  marks.setRadius(10);
+		  }
+		  
+		 
+		  
+		}
 		
-		Object magObj = feature.getProperty("magnitude");
-		float mag = Float.parseFloat(magObj.toString());
+		  else { marks =null;   }
+		
+		// Create a new SimplePointMarker at the location given by the PointFeature
+	
+		
+//		Object magObj = feature.getProperty("magnitude");
+//		float mag = Float.parseFloat(magObj.toString());
 		
 		// Here is an example of how to use Processing's color method to generate 
 	    // an int that represents the color yellow.  
@@ -172,8 +190,10 @@ System.out.println(eqobj.getProperties());
 	    // above if you want to change what you mean by "moderate" and "light")
 	    
 	    
+		
+		
 	    // Finally return the marker
-	    return marker;
+		  return marks; 
 	}
 	
 	public void draw() {
@@ -219,6 +239,9 @@ System.out.println(eqobj.getProperties());
 				//small Mag
 				fill(128, 128, 128);
 				ellipse(60, 237, 20, 20);
+				
+				
+				
 		
 	}
 		

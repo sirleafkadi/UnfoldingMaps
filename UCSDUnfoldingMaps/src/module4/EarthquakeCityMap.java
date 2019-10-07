@@ -164,7 +164,7 @@ triangle(50, 145, 45, 155, 55, 155);
 				fill(color(255, 255, 255));
 				rect(45, 125, 10, 10);
 
-		
+				
 		
 		
 		//Shallow
@@ -177,6 +177,9 @@ triangle(50, 145, 45, 155, 55, 155);
 				fill(color(255, 0, 0));
 				ellipse(50, 250, 10, 10);
 		
+				
+				
+				
 				///Printing Text Base off of drawing methods position
 				fill(0, 0, 0);
 				text("Land Quake", 75, 100);
@@ -187,9 +190,15 @@ triangle(50, 145, 45, 155, 55, 155);
 				text("Intermediate", 75, 225);
 				text("Deep", 75, 250);
 		
-		
-		
-		
+				fill(255,255,255);
+				ellipse(55, 215, 10, 10);
+				line(50, 210, 60, 220);
+				line(60, 210, 50, 220);
+				
+				fill(0,0,0);
+				text("Past Hour", 65, 215);
+				
+		////I can't get this to sit properly
 
 	}
 

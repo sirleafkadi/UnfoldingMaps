@@ -12,6 +12,7 @@ import processing.core.PGraphics;
  */
 public abstract class EarthquakeMarker extends SimplePointMarker
 {
+
 	
 	// Did the earthquake occur on land?  This will be set by the subclasses.
 	protected boolean isOnLand;
@@ -61,6 +62,25 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 		// save previous styling
 		pg.pushStyle();
 			
+		String xmarkage = getStringProperty("age");
+		float rad = getMagnitude();
+			
+		pg.fill(255,255,255);
+		pg.stroke(0,0,0);
+			
+		
+		
+			if (xmarkage.equals("Past Day")|| xmarkage.equals("Past Day") ){
+			
+				pg.line(x + rad, y - rad, x - rad, y + rad);
+				pg.line(x - rad, y - rad, x + rad, y + rad);
+			}
+		
+		
+		
+		
+		
+		
 		// determine color of marker from depth
 		colorDetermine(pg);
 		
@@ -68,6 +88,9 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 		drawEarthquake(pg, x, y);
 		
 		// OPTIONAL TODO: draw X over marker if within past day		
+		
+	
+		
 		
 		// reset to previous styling
 		pg.popStyle();
@@ -119,6 +142,6 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 	{
 		return isOnLand;
 	}
-	
+
 	
 }
