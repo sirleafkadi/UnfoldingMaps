@@ -34,13 +34,34 @@ public class LandQuakeMarker extends EarthquakeMarker {
 		
 		// TODO: Implement this method
 		
-				Object getrad = getProperty("radius");
-				float rad = Float.parseFloat(getrad.toString());
-				
-				pg.ellipse(x,y,rad,rad);
 				
 				
-	
+				
+				
+				if(isOnLand()) {
+					
+					Object getrad = getProperty("radius");
+					float rad = Float.parseFloat(getrad.toString());
+					pg.ellipse(x,y,rad,rad);
+					
+					
+					Object getmag = getProperty("radius");
+					float mag = Float.parseFloat(getmag.toString());
+					
+					
+					String xmarkage = getStringProperty("age");
+					
+						
+					pg.fill(255,255,255);
+					pg.stroke(0,0,0);
+					if (xmarkage.equals("Past Day")|| xmarkage.equals("Past Day") ){
+						
+							pg.line(x + mag, y - mag, x - mag, y + mag);
+							pg.line(x - mag, y - mag, x + mag, y + mag);
+						}
+					
+					
+					}
 	
 	
 		
