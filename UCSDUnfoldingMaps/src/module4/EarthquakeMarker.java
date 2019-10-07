@@ -62,22 +62,21 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 		// save previous styling
 		pg.pushStyle();
 			
+		if(isOnLand()) {
+		
 		String xmarkage = getStringProperty("age");
 		float rad = getMagnitude();
 			
 		pg.fill(255,255,255);
 		pg.stroke(0,0,0);
-			
-		
-		
-			if (xmarkage.equals("Past Day")|| xmarkage.equals("Past Day") ){
+		if (xmarkage.equals("Past Day")|| xmarkage.equals("Past Day") ){
 			
 				pg.line(x + rad, y - rad, x - rad, y + rad);
 				pg.line(x - rad, y - rad, x + rad, y + rad);
 			}
 		
 		
-		
+		}
 		
 		
 		
